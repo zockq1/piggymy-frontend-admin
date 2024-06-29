@@ -37,19 +37,19 @@ export const getVocaList = async (
   return response.data;
 };
 
-export function useGetVocaList(data: Request<GetVocaListRequestQuery>) {
+export function useGetVocaList(request: Request<GetVocaListRequestQuery>) {
   return useQuery({
-    queryKey: ['vocas'],
-    queryFn: () => getVocaList(data),
+    queryKey: ['vocas', request?.data],
+    queryFn: () => getVocaList(request),
   });
 }
 
-export function usePrefetchVocaList(
+export function prefetchVocaList(
   queryClient: QueryClient,
-  data: Request<GetVocaListRequestQuery>,
+  request: Request<GetVocaListRequestQuery>,
 ) {
   return queryClient.prefetchQuery({
-    queryKey: ['vocas', data?.data],
-    queryFn: () => getVocaList(data),
+    queryKey: ['vocas', request?.data],
+    queryFn: () => getVocaList(request),
   });
 }

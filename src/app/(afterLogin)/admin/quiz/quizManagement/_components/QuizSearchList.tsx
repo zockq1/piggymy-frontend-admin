@@ -9,12 +9,7 @@ import {
   useRouter,
   useSearchParams,
 } from 'next/navigation';
-import React, {
-  ChangeEvent,
-  MouseEventHandler,
-  useEffect,
-  useState,
-} from 'react';
+import React, { ChangeEvent, MouseEventHandler, useState } from 'react';
 
 import search from '/public/img/Icon/search.png';
 import Text from '@/share/form/item/Text';
@@ -58,7 +53,7 @@ function QuizSearchList() {
   const selectQuizIds = selectQuizList.map((quiz) => quiz.id);
   const selectQuizIsUseValues = selectQuizList.map((quiz) => quiz.isUse);
 
-  const { data, refetch } = useGetQuizList({
+  const { data } = useGetQuizList({
     data: {
       page,
       page_size: 10,
@@ -146,10 +141,6 @@ function QuizSearchList() {
     }
   };
 
-  useEffect(() => {
-    refetch().then();
-  }, [sortType, page, refetch]);
-
   return (
     <ContentBox className={'flex h-full items-start'}>
       <Form
@@ -215,9 +206,7 @@ function QuizSearchList() {
                     koreanTitle={quiz.title}
                     createdDate={dayjs(quiz.createdDate)}
                     isActive={quiz.isUse}
-                    isChecked={selectQuizList
-                      .map((quiz) => quiz.id)
-                      .includes(quiz.id)}
+                    isChecked={selectQuizIds.includes(quiz.id)}
                     route={`/admin/quiz/quizManagement/${quiz.id}`}
                     isSelected={+params.quizId === quiz.id}
                     onChangeChecked={() => toggleCheck(quiz)}
@@ -240,9 +229,8 @@ function QuizSearchList() {
             showLessItems
             showSizeChanger={false}
             total={totalCount}
-            onChange={async (page) => {
+            onChange={(page) => {
               setPage(page);
-              await refetch();
             }}
           />
         </div>

@@ -8,7 +8,7 @@ import Layout from '@/share/layout/Layout';
 import { usePrefetchCard } from '@/share/query/card/useGetCard';
 import { usePrefetchCardList } from '@/share/query/card/useGetCardList';
 import { usePrefetchQuizList } from '@/share/query/quiz/useGetQuizList';
-import { usePrefetchVocaList } from '@/share/query/voca/useGetVocaList';
+import { prefetchVocaList } from '@/share/query/voca/useGetVocaList';
 
 import CardList from '../_components/CardList';
 import CardPageInfo from '../_components/CardPageInfo';
@@ -18,7 +18,7 @@ export default async function Card({ params }: { params: { cardId: string } }) {
   const queryClient = new QueryClient();
   await Promise.all([
     usePrefetchCardList(queryClient),
-    usePrefetchVocaList(queryClient, {
+    prefetchVocaList(queryClient, {
       data: { page: 1, page_size: 1000 },
     }),
     usePrefetchQuizList(queryClient, {

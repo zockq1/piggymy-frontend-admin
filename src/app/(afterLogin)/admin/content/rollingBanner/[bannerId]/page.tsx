@@ -7,7 +7,7 @@ import {
 import Layout from '@/share/layout/Layout';
 import { usePrefetchBanner } from '@/share/query/banner/useGetBanner';
 import { usePrefetchBannerList } from '@/share/query/banner/useGetBannerList';
-import { usePrefetchVocaList } from '@/share/query/voca/useGetVocaList';
+import { prefetchVocaList } from '@/share/query/voca/useGetVocaList';
 
 import BannerList from '../_components/BannerList';
 import BannerPageInfo from '../_components/BannerPageInfo';
@@ -21,7 +21,7 @@ export default async function Banner({
   const queryClient = new QueryClient();
   await Promise.all([
     usePrefetchBannerList(queryClient),
-    usePrefetchVocaList(queryClient, {
+    prefetchVocaList(queryClient, {
       data: { page: 1, page_size: 1000 },
     }),
     usePrefetchBanner(queryClient, {
